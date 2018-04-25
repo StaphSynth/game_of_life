@@ -59,4 +59,4 @@ const nextGeneration = board => (
   ), [])
 );
 
-export { nextGeneration }
+export default nextGeneration;

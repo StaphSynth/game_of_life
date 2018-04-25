@@ -1,26 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { nextGeneration } from './lib/game_of_life';
+import nextGeneration from './lib/game_of_life';
+import Board from './components/board';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      gameBoard: [{x: 5, y: 5}, {x: 6, y: 5}, {x: 7, y: 5}]
+    };
+  }
+
+  nextBoard() {
+    this.setState({gameBoard: nextGeneration(this.state.gameBoard)})
+  }
+
   componentDidMount() {
-    console.log('next gen', nextGeneration([{x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}]));
+    sleep(500).then(() => {
+      this.nextBoard();
+    });
+  }
+
+  componentDidUpdate() {
+    sleep(500).then(() => {
+      this.nextBoard();
+    });
   }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="game-of-life">
+        <Board
+          size="10"
+          board={ this.state.gameBoard }
+        />
       </div>
     );
   }
 }
+
+const sleep = ms => (
+  new Promise(resolve => setTimeout(resolve, ms))
+);
 
 export default App;
