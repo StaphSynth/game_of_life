@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { nextGeneration } from './lib/game_of_life';
 
 class App extends Component {
+  componentDidMount() {
+    console.log('next gen', nextGeneration([{x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}]));
+  }
+
   render() {
     return (
       <div className="App">
