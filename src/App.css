@@ -3,7 +3,7 @@
   height: 10px;
 }
 
-.cell {
+.alive {
   border-radius: 50%;
   background-color: green;
 }
