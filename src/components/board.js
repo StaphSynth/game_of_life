@@ -1,5 +1,6 @@
 import React from 'react';
 import { isAlive } from '../lib/game_of_life';
+import { addRemoveCell, currentGameState } from '../controller';
 
 const Board = ({ board, size }) => (
   <table className="board">
@@ -23,12 +24,20 @@ const generateTable = (board, size) => {
   return tableRows;
 };
 
-const Cell = ({ x, y, board }) => (
-  <td
-    data-x={ x }
-    data-y={ y }
-    className={ isAlive({ x, y }, board) ? 'alive' : undefined }
-  />
-);
+const Cell = ({ x, y, board }) => {
+  const handleClick = () => {
+    const { running } = currentGameState();
+    !running && addRemoveCell({ x, y });
+  };
+
+  return (
+    <td
+      data-x={ x }
+      data-y={ y }
+      className={ isAlive({ x, y }, board) ? 'alive' : undefined }
+      onClick={ () => handleClick() }
+    />
+  );
+};
 
 export default Board;

@@ -1,3 +1,8 @@
+.board {
+  border-collapse: collapse;
+  border: 1px solid lightgray;
+}
+
 .board td {
   width: 10px;
   height: 10px;

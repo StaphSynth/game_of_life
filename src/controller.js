@@ -1,5 +1,5 @@
 import { getState, updateState } from './state_management/repository';
-import { nextGeneration } from './lib/game_of_life';
+import { nextGeneration, isAlive } from './lib/game_of_life';
 
 export const nextBoard = () => {
   updateState(state => (
@@ -33,7 +33,26 @@ export const resetGame = () => {
   updateState(state => (
     { ...state, gameBoard: [], running: false, intervalId: null }
   ));
-}
+};
+
+export const addRemoveCell = (cell) => {
+  const { gameBoard } = getState();
+  const removeCell = (board, cell) => (
+    board.filter(elem => (
+      !(elem.x === cell.x && elem.y === cell.y)
+    ))
+  );
+
+  if (isAlive(cell, gameBoard)) {
+    updateState(state => (
+      { ...state, gameBoard: removeCell(gameBoard, cell) }
+    ));
+  } else {
+    updateState(state => (
+      { ...state, gameBoard: [...gameBoard, cell] }
+    ));
+  }
+};
 
 export const currentGameState = () => (
   getState()
