@@ -8,6 +8,7 @@ const Game = ({ running, gameBoard, boardSize }) => (
     <Board
       size={ boardSize }
       board={ gameBoard }
+      running={ running }
     />
     <button onClick={ () => startStopGame() }>
       { running ? 'Pause' : 'Start' }
