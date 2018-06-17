@@ -39,7 +39,7 @@ const liveNeighbourCount = (cell, board) => (
   intersection(neighbours(cell), board).length
 );
 
-const isAlive = (cell, board) => (
+export const isAlive = (cell, board) => (
   intersection([cell], board).length > 0
 );
 
@@ -53,10 +53,8 @@ const willLive = (cell, board) => {
   }
 };
 
-const nextGeneration = board => (
+export const nextGeneration = board => (
   allNeighbours(board).reduce((nextGen, cell) => (
     willLive(cell, board) ? union(nextGen, [cell]) : nextGen
   ), [])
 );
-
-export default nextGeneration;
