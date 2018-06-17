@@ -1,4 +1,4 @@
-import { getState, updateState } from './state_management/repository';
+import { getState, updateState } from './repository';
 import { nextGeneration, isAlive } from './lib/game_of_life';
 
 export const nextBoard = () => {

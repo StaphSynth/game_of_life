@@ -30,9 +30,9 @@ const neighbours = ({x, y}) => ([
 ]);
 
 const allNeighbours = board => (
-  board.reduce((acc, cell) => {
-    return union(acc, neighbours(cell));
-  }, [])
+  board.reduce((acc, cell) => (
+    union(acc, neighbours(cell))
+  ), [])
 );
 
 const liveNeighbourCount = (cell, board) => (
