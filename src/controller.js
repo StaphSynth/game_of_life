@@ -26,6 +26,15 @@ export const startStopGame = () => {
   }
 };
 
+export const resetGame = () => {
+  const { intervalId } = getState();
+
+  clearInterval(intervalId);
+  updateState(state => (
+    { ...state, gameBoard: [], running: false, intervalId: null }
+  ));
+}
+
 export const currentGameState = () => (
   getState()
 );
