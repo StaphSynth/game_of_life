@@ -8,31 +8,47 @@ export const nextBoard = () => {
 };
 
 export const startStopGame = () => {
-  const { running, intervalId } = getState();
-
-  if (running) {
-    clearInterval(intervalId);
-    updateState(state => (
-      { ...state, running: false, intervalId: null }
-    ));
-  } else {
-    updateState(state => (
-      {
-        ...state,
-        running: true,
-        intervalId: setInterval(nextBoard, state.interval)
-      }
-    ))
-  }
+  const { running } = getState();
+  running ? pauseGame() : startGame();
 };
 
-export const resetGame = () => {
+const pauseGame = () => {
   const { intervalId } = getState();
 
   clearInterval(intervalId);
   updateState(state => (
-    { ...state, gameBoard: [], running: false, intervalId: null }
+    { ...state, running: false, intervalId: null }
   ));
+};
+
+const startGame = () => {
+  const { initialBoardState } = getState();
+
+  if (initialBoardState.length <= 0) {
+    updateState(state => ({
+      ...state,
+      initialBoardState: state.gameBoard
+    }));
+  }
+
+  updateState(state => ({
+      ...state,
+      running: true,
+      intervalId: setInterval(nextBoard, state.interval)
+  }));
+};
+
+export const clearGame = () => {
+  const { intervalId } = getState();
+
+  clearInterval(intervalId);
+  updateState(state => ({
+    ...state,
+    gameBoard: [],
+    initialBoardState: [],
+    running: false,
+    intervalId: null
+  }));
 };
 
 export const addRemoveCell = (cell) => {
@@ -52,6 +68,15 @@ export const addRemoveCell = (cell) => {
       { ...state, gameBoard: [...gameBoard, cell] }
     ));
   }
+};
+
+export const resetGame = () => {
+  const { initialBoardState } = getState();
+
+  pauseGame();
+  updateState(state => (
+    { ...state, gameBoard: initialBoardState }
+  ));
 };
 
 export const currentGameState = () => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import Board from './Board';
-import { startStopGame, resetGame } from '../controller';
+import { startStopGame, clearGame, resetGame } from '../controller';
 
 const Game = ({ running, gameBoard, boardSize }) => (
   <div className="game-of-life">
@@ -15,6 +15,9 @@ const Game = ({ running, gameBoard, boardSize }) => (
     </button>
     <button onClick={ () => resetGame() }>
       Reset
+    </button>
+    <button onClick={ () => clearGame() }>
+      Clear
     </button>
   </div>
 );
