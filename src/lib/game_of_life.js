@@ -12,7 +12,7 @@
   where we aren't using primitive values. The union func ensures no duplicate elems.
 */
 
-const union = (a, b) => (
+export const union = (a, b) => (
   [...a, ...b].filter((elem, index, self) => (
     self.findIndex(e => elem.x === e.x && elem.y === e.y) === index
     )

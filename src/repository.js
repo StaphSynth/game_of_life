@@ -7,6 +7,7 @@ let state = {
   interval: 200, //time (ms) between board re-render
   intervalId: null,
   running: false,
+  mouseDown: false,
 };
 
 export const getState = () => (

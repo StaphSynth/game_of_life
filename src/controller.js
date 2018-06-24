@@ -1,5 +1,5 @@
 import { getState, updateState } from './repository';
-import { nextGeneration, isAlive } from './lib/game_of_life';
+import { nextGeneration, isAlive, union } from './lib/game_of_life';
 
 export const nextBoard = () => {
   updateState(state => (
@@ -65,9 +65,17 @@ export const addRemoveCell = (cell) => {
     ));
   } else {
     updateState(state => (
-      { ...state, gameBoard: [...gameBoard, cell] }
+      { ...state, gameBoard: union(gameBoard, [cell]) }
     ));
   }
+};
+
+export const addCell = (cell) => {
+  const { gameBoard } = getState();
+
+  updateState(state => (
+    { ...state, gameBoard: union(gameBoard, [cell]) }
+  ));
 };
 
 export const resetGame = () => {
@@ -82,3 +90,11 @@ export const resetGame = () => {
 export const currentGameState = () => (
   getState()
 );
+
+export const handleMouseDownUp = () => {
+  const { mouseDown } = getState();
+
+  updateState(state => (
+    { ...state, mouseDown: !mouseDown }
+  ));
+};

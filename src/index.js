@@ -7,12 +7,13 @@ import { currentGameState } from './controller';
 
 class App extends React.Component {
   render() {
-    const { running, gameBoard, boardSize } = currentGameState();
+    const { running, gameBoard, boardSize, mouseDown } = currentGameState();
     return (
       <Game
         running={ running }
         gameBoard={ gameBoard }
         boardSize={ boardSize }
+        mouseDown={ mouseDown }
       />
     );
   }
