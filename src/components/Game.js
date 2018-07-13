@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style.scss';
+import '../styles/main.scss';
 import Board from './Board';
 import Controls from './Controls';
 
