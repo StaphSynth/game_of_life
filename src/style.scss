@@ -1,3 +1,5 @@
+$cellColor: #0871D0;
+
 .board {
   border-collapse: collapse;
   border: 1px solid lightgray;
@@ -10,5 +12,5 @@
 
 .alive {
   border-radius: 50%;
-  background-color: green;
+  background-color: $cellColor;
 }
