@@ -1,37 +1,37 @@
-import { getState, updateState } from './repository';
+import gameState from './state/app-state';
 import { nextGeneration, isAlive, union } from './lib/game_of_life';
 
 export const nextBoard = () => {
-  updateState(state => (
+  gameState.update(state => (
     { ...state, gameBoard: nextGeneration(state.gameBoard) }
   ));
 };
 
 export const startStopGame = () => {
-  const { running } = getState();
+  const { running } = gameState.get();
   running ? pauseGame() : startGame();
 };
 
 const pauseGame = () => {
-  const { intervalId } = getState();
+  const { intervalId } = gameState.get();
 
   clearInterval(intervalId);
-  updateState(state => (
+  gameState.update(state => (
     { ...state, running: false, intervalId: null }
   ));
 };
 
 const startGame = () => {
-  const { initialBoardState } = getState();
+  const { initialBoardState } = gameState.get();
 
   if (initialBoardState.length <= 0) {
-    updateState(state => ({
+    gameState.update(state => ({
       ...state,
       initialBoardState: state.gameBoard
     }));
   }
 
-  updateState(state => ({
+  gameState.update(state => ({
       ...state,
       running: true,
       intervalId: setInterval(nextBoard, state.interval)
@@ -39,10 +39,10 @@ const startGame = () => {
 };
 
 export const clearGame = () => {
-  const { intervalId } = getState();
+  const { intervalId } = gameState.get();
 
   clearInterval(intervalId);
-  updateState(state => ({
+  gameState.update(state => ({
     ...state,
     gameBoard: [],
     initialBoardState: [],
@@ -52,7 +52,7 @@ export const clearGame = () => {
 };
 
 export const addRemoveCell = (cell) => {
-  const { gameBoard } = getState();
+  const { gameBoard } = gameState.get();
   const removeCell = (board, cell) => (
     board.filter(elem => (
       !(elem.x === cell.x && elem.y === cell.y)
@@ -60,41 +60,41 @@ export const addRemoveCell = (cell) => {
   );
 
   if (isAlive(cell, gameBoard)) {
-    updateState(state => (
+    gameState.update(state => (
       { ...state, gameBoard: removeCell(gameBoard, cell) }
     ));
   } else {
-    updateState(state => (
+    gameState.update(state => (
       { ...state, gameBoard: union(gameBoard, [cell]) }
     ));
   }
 };
 
 export const addCell = (cell) => {
-  const { gameBoard } = getState();
+  const { gameBoard } = gameState.get();
 
-  updateState(state => (
+  gameState.update(state => (
     { ...state, gameBoard: union(gameBoard, [cell]) }
   ));
 };
 
 export const resetGame = () => {
-  const { initialBoardState } = getState();
+  const { initialBoardState } = gameState.get();
 
   pauseGame();
-  updateState(state => (
+  gameState.update(state => (
     { ...state, gameBoard: initialBoardState }
   ));
 };
 
 export const currentGameState = () => (
-  getState()
+  gameState.get()
 );
 
 export const handleMouseDownUp = () => {
-  const { mouseDown } = getState();
+  const { mouseDown } = gameState.get();
 
-  updateState(state => (
+  gameState.update(state => (
     { ...state, mouseDown: !mouseDown }
   ));
 };
