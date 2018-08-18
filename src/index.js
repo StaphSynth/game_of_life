@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
 import Game from './components/Game';
 import { currentGameState } from './controller';
 
@@ -20,4 +19,3 @@ class App extends React.Component {
 }
 
 export const root = ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
